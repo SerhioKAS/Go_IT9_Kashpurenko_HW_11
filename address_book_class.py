@@ -4,17 +4,17 @@ from collections import UserDict
 #----------створюємо Клас Field, який буде батьківським для всіх полів.
 class Field:
     def __init__(self, value) -> None:
-        self.val = None                                                            
+        self._value = None                                                            
         self.value = value
 
 #-2-setter та getter логіка для атрибутів value спадкоємців Field.
     @property                                                                       
     def value(self):                                                                
-        return self.val                                                             
+        return self._value                                                           
 
     @value.setter                                                                   
     def value(self, value):                                                        
-        self.val = value                                                            
+        self._value = value                                                            
 #----------створюємо Клас Name, обов'язкове поле з ім'ям.
 class Name(Field):
     pass
@@ -25,11 +25,11 @@ class Phone(Field):
  #-2-функціонал перевірки на правильність веденого номера телефону класу Phone.   
     @Field.value.setter                                                             
     def value(self, value):                                                        
-        if len(value) < 10 or len(value) > 12: # if not 10 =< len(value) =< 12      
+        if len(value) < 10 or len(value) > 12:     
             raise ValueError("Phone must contains 10 symbols - '0957775533', or 12 symbols - '380634101234.")
         if not value.isdigit():                            
             raise ValueError("Wrong phonenumber.")                
-        self.val = value                                       
+        self._value = value                                       
 
 #-2------------Додали поле для дня народження Birthday.
 #------------- Це поле не обов'язкове, але може бути тільки одне.
@@ -43,7 +43,7 @@ class Birthday(Field):
 #-2-функціонал перевірки на правильність веденого дня народження класу Birthday.
         if birth_date > today:                                                    
             raise ValueError("Birthday must be less than current year and date.")  
-        self.val = value                                                        
+        self._value = value                                                        
 
 #---------створюємо Клас Record, який відповідає за логіку додавання/видалення/редагування
 #---------необов'язкових полів та зберігання обов'язкового поля Name.
